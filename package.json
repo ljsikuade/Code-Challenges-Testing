@@ -1,0 +1,17 @@
+{
+  "name": "codechallenges",
+  "version": "1.0.0",
+  "description": "code katas and tests",
+  "main": "codechallenge.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^22.1.4"
+  },
+  "author": "",
+  "license": "ISC"
+}
