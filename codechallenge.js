@@ -76,32 +76,33 @@ anagrams('laser', ['lazing', 'lazy',  'lacer']) => []
 
 function anagrams(word, wordList) {
   const wordOneAsArray = word.split("");
-  //Get letter instances for all words.
+  //Get letter instances for word.
   const wordOneInstances = getInstancesAsObject(wordOneAsArray);
   //Return only the arrays that contain all the right letters.
-  const wordsAsArrays = wordList
-    .map(word => word.split(""))
-    .filter(word => word.every(letter => wordOneAsArray.includes(letter)));
-  const wordListInstances = wordsAsArrays.map(word =>
-    getInstancesAsObject(word)
-  );
+
+  const wordListInstances = wordList.map(word => {
+    let wordSplit = Array.from(word);
+    return getInstancesAsObject(wordSplit);
+  });
+
   //Look for anagrams.
   const anagramList = wordListInstances.map(wordInstancesObject =>
     isWordObjectAnagram(wordInstancesObject)
   );
+
   //Remove null entries.
   const noNullList = anagramList.filter(anagram => anagram != null);
   //Reverse getInstancesAsObject function, to turn the anagram objects into a single array.
   const anagrams = deriveWordFromObject(noNullList).map(anagramAsArray =>
     anagramAsArray.join("")
   );
-
+  console.log(anagrams);
   //Turn e.g. ['h', 'e', 'l', 'l', 'o'] into { h: 1, e: 1, l: 2, o: 1 }
   function getInstancesAsObject(array) {
     let returnObject = {};
     array.forEach(
       letter =>
-        (returnObject = Object.assign({}, returnObject, {
+        (returnObject = Object.assign(returnObject, {
           [letter]: returnObject[letter] ? returnObject[letter] + 1 : 1
         }))
     );
@@ -110,14 +111,14 @@ function anagrams(word, wordList) {
 
   function isWordObjectAnagram(wordObject) {
     //Early check
-
+    let res = [];
     const letters = Object.keys(wordObject);
     letters.forEach(letter => {
       if (!wordOneAsArray.includes(letter)) {
         return;
       }
     });
-    let res = [];
+
     Object.keys(wordOneInstances).map(oneKey =>
       Object.keys(wordObject).map(twoKey => {
         if (oneKey === twoKey) {
@@ -142,8 +143,12 @@ function anagrams(word, wordList) {
     );
     return result;
   }
-
-  return anagrams;
+  let finalCheck = anagrams.filter(anagram => {
+    if (anagram.length === word.length) {
+      return anagram;
+    }
+  });
+  return finalCheck;
 }
 
 /*Write a function called that takes a string of parentheses, 
