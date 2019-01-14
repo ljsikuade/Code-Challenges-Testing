@@ -96,7 +96,6 @@ function anagrams(word, wordList) {
   const anagrams = deriveWordFromObject(noNullList).map(anagramAsArray =>
     anagramAsArray.join("")
   );
-  console.log(anagrams);
   //Turn e.g. ['h', 'e', 'l', 'l', 'o'] into { h: 1, e: 1, l: 2, o: 1 }
   function getInstancesAsObject(array) {
     let returnObject = {};
@@ -322,6 +321,33 @@ function moveZeros(arr) {
   return workableArr.concat(tempArr);
 }
 
+/*
+Move the first letter of each word to the end of it, then add "ay" to the end of the word. Leave punctuation marks untouched.
+
+Examples
+pigIt('Pig latin is cool'); // igPay atinlay siay oolcay
+pigIt('Hello world !');     // elloHay orldway !
+5kyu
+*/
+function pigIt(str) {
+  let words = str.split(" ");
+  //for example
+  const exclude = ["!", ",", ".", ":", "?"];
+  let pigVerInitial = words.map(word => {
+    if (!word.includes(...exclude)) {
+      let splitWord = word.split("");
+      let first = splitWord.shift();
+      splitWord.push(first);
+      let joined = splitWord.join("");
+      return joined + "ay";
+    } else {
+      return word;
+    }
+  });
+
+  return pigVerInitial.join(" ");
+}
+
 module.exports = {
   listSquared,
   anagrams,
@@ -330,5 +356,6 @@ module.exports = {
   findUniq,
   oddOneOut,
   whoIsNext,
-  moveZeros
+  moveZeros,
+  pigIt
 };

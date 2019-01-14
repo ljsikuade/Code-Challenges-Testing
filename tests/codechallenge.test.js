@@ -125,3 +125,15 @@ test("Moves all zeros to end of array without affecting order", () => {
   ]);
   expect(result).toEqual(expected);
 });
+
+test("Moves first letter of each word to the end and adds 'ay'", () => {
+  const expected = "igpay atinlay siay oolcay";
+  const result = challenge.pigIt("pig latin is cool");
+  expect(result).toEqual(expected);
+});
+
+test("Must not be punctuation", () => {
+  const expected = "elloHay orldway !";
+  const result = challenge.pigIt("Hello world !");
+  expect(result).toEqual(expected);
+});
